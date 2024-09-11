@@ -1,10 +1,10 @@
 package snake;
 
 import java.awt.*;
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Arrays;
+import javax.swing.*;
 
 public class snakeGame extends JPanel implements KeyListener {
 
@@ -34,7 +34,7 @@ public class snakeGame extends JPanel implements KeyListener {
     public void triggerRepaint() {
         SwingUtilities.invokeLater(() -> repaint());
     }
-
+    //#region   key Binding
     @Override
     public void keyTyped(KeyEvent e) {
         //keyTyped = Invoked when a key is typed. Uses KeyChar, char output
@@ -67,4 +67,5 @@ public class snakeGame extends JPanel implements KeyListener {
         }
         return keyCodes;
     }
+    //endregion
 }
