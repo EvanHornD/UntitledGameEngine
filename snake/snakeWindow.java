@@ -13,9 +13,9 @@ public class snakeWindow {
 
     public void initialize(){
         frame = new JFrame();
-        this.frame.setTitle("untitled Summer Project");
+        this.frame.setTitle("Snake Game");
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.frame.setSize(1935, 1050);
+        this.frame.setSize(1935/2, 1050/2);
         this.frame.setLocationRelativeTo(null);
         this.frame.setResizable(true);
         this.frame.setVisible(true);
