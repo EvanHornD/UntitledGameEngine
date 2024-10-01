@@ -8,7 +8,7 @@ public class snakeLauncher {
             @Override
             public void run(){
                 snakeWindow game = new snakeWindow();
-                game.panel.runGameLoop();
+                game.panel.startGameTimer();
             }
         });
     }

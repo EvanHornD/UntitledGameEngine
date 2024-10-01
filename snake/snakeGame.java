@@ -1,17 +1,15 @@
 package snake;
 
 import java.awt.*;
-import javax.swing.*;
+import java.util.Map;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class snakeGame extends JPanel {
 
     //#region   Class attributes
-    int[] keyCodes = {};
     String lastKeyPressed = "";
-    Timer gameTimer;
+    gameTimer gameTimer;
     private KeyBindsManager keyBinds;
     //#endregion
 
@@ -20,22 +18,42 @@ public class snakeGame extends JPanel {
         this.setFocusable(true);
         this.requestFocus();
         keyBinds = new KeyBindsManager(this);
-        runGameLoop();
+        gameTimer = new gameTimer();
     }
 
-    public void runGameLoop(){
-        int delay = 16; // roughly 60 FPS -> 1000ms / 60 = ~16ms
-        gameTimer = new Timer(delay, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+    public void startGameTimer() {
+        gameTimer.start(deltaTime -> {
+            // Update game state
+            runGameLoop(deltaTime);
 
-                // Redraw the screen
-                triggerRepaint();
-            }
+            // Trigger the repaint
+            triggerRepaint();
         });
+    }
 
-        // Start the timer, effectively starting the game loop
-        gameTimer.start();
+    public void runGameLoop(double delta){
+        for (Map.Entry<String,Integer> keyBind : keyBinds.keyActions.entrySet()) {
+            Integer state = keyBind.getValue();
+            if(state>0){
+                String action = keyBind.getKey();
+                Integer framesPressed = keyBinds.keyFrames.get(action);
+                switch (state) {
+                    case 1:
+                    if (framesPressed==0) {
+                        System.out.println(action+" Pressed");
+                    } else {
+                        System.out.println(framesPressed);
+                    }
+                    break;
+                    case 2:
+                    System.out.println(action+" Released");
+                    break;
+                    default:
+                        break;
+                }
+            }
+        }
+        keyBinds.updateFrameInformation();
     }
 
     public void paint(Graphics g){
@@ -45,7 +63,4 @@ public class snakeGame extends JPanel {
     public void triggerRepaint() {
         SwingUtilities.invokeLater(() -> repaint());
     }
-    //#region   key Binding
-    
-    //endregion
 }

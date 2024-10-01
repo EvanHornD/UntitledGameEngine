@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class KeyBindsManager {
-     Map<String, String> defaultKeyBindings = new HashMap<>(Map.of(
+    Map<String, String> defaultKeyBindings = new HashMap<>(Map.of(
             "UP", "Up",
             "W", "Up",
             "DOWN", "Down",
@@ -22,10 +22,12 @@ public class KeyBindsManager {
             "Left", 0,
             "Right", 0
     ));
+    Map<String, Integer> keyFrames = new HashMap<>();
 
-    private final InputMap inputMap;
-    private final ActionMap actionMap;
+    private InputMap inputMap;
+    private ActionMap actionMap;
 
+    @SuppressWarnings("static-access")
     public KeyBindsManager(JComponent component) {
         this.inputMap = component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         this.actionMap = component.getActionMap();
@@ -51,7 +53,6 @@ public class KeyBindsManager {
                     public void actionPerformed(ActionEvent e) {
                         if (keyActions.get(action) == 0) {
                             keyActions.replace(action, 1);
-                            System.out.println(action + " Pressed");
                         }
                     }
                 };
@@ -62,10 +63,9 @@ public class KeyBindsManager {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         keyActions.replace(action, 2);
-                        System.out.println(action + " Released");
-                        keyActions.replace(action, 0);
                     }
                 };
+        keyFrames.put(actionName, 0);
         actionMap.put(actionName, keyPressed);
         actionMap.put(actionName + "Released", keyReleased);
     }
@@ -82,5 +82,23 @@ public class KeyBindsManager {
     public void changeKeyBinding(String oldKey, String newKey, String action) {
         removeKeyBinding(oldKey);
         addKeyBinding(newKey, action);
+    }
+
+    public void updateFrameInformation(){
+        for (Map.Entry<String,Integer> action : keyActions.entrySet()) {
+            String actionName = action.getKey();
+            Integer actionState = action.getValue();
+            Integer actionFrameState = keyFrames.get(actionName);
+            switch (actionState) {
+                case 1:
+                actionFrameState++;
+                keyFrames.replace(actionName, actionFrameState);
+                break;
+                case 2:
+                keyFrames.replace(actionName,0);
+                keyActions.replace(actionName,0);
+                break;
+            }
+        }
     }
 }
