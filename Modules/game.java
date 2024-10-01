@@ -10,7 +10,7 @@ public class game extends JPanel {
     //#region   Class attributes
     String lastKeyPressed = "";
     gameTimer gameTimer;
-    private KeyBindsManager keyBinds;
+    KeyBindsManager keyBinds;
     //#endregion
 
     game(Dimension dimensions){

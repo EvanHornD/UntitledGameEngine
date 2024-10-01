@@ -24,7 +24,7 @@ public class gameWindow {
 
         Dimension screenDimensions = getScreenDimensions();
         int width = (int)screenDimensions.getWidth();
-        int height = (int)screenDimensions.getHeight();
+        int height = (int)screenDimensions.getHeight()/2;
 
         this.frame.setSize(width, height);
         this.frame.setLocationRelativeTo(null);
