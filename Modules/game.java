@@ -8,6 +8,7 @@ public class game extends JPanel {
     //#region   Class attributes
     gameTimer gameTimer;
     KeyBindsManager keyBinds;
+    GraphicsRenderer renderer;
     //#endregion
 
     game(Dimension dimensions){
@@ -16,6 +17,7 @@ public class game extends JPanel {
         this.requestFocus();
         keyBinds = new KeyBindsManager(this);
         gameTimer = new gameTimer();
+        renderer = new GraphicsRenderer(this);
     }
 
     public void startGameTimer() {
@@ -24,7 +26,7 @@ public class game extends JPanel {
             runGameLoop(deltaTime);
 
             // Trigger the repaint
-            triggerRepaint();
+            renderer.triggerRepaint();
         });
     }
 
@@ -49,13 +51,11 @@ public class game extends JPanel {
         }
         keyBinds.updateFrameInformation();
     }
-
+    
     @Override
-    public void paint(Graphics g){
-
-    }
-
-    public void triggerRepaint() {
-        SwingUtilities.invokeLater(() -> repaint());
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        renderer.draw(g2d);
     }
 }
