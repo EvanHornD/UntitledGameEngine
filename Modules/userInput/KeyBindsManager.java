@@ -1,4 +1,4 @@
-package Modules;
+package Modules.userInput;
 
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
