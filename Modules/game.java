@@ -1,14 +1,11 @@
 package Modules;
 
 import java.awt.*;
-import java.util.Map;
-
 import javax.swing.*;
 
 public class game extends JPanel {
 
     //#region   Class attributes
-    String lastKeyPressed = "";
     gameTimer gameTimer;
     KeyBindsManager keyBinds;
     //#endregion
@@ -32,28 +29,28 @@ public class game extends JPanel {
     }
 
     public void runGameLoop(double delta){
-        for (Map.Entry<String,Integer> keyBind : keyBinds.keyActions.entrySet()) {
-            Integer state = keyBind.getValue();
+        Object[][] Actions = keyBinds.getActionInformation();
+        for (Object[] Action : Actions) {
+            Integer state = (Integer)Action[1];
             if(state>0){
-                String action = keyBind.getKey();
-                Integer framesPressed = keyBinds.keyFrames.get(action);
+                String action = (String)Action[0];
+                Integer framesPressed = (Integer)Action[2];
                 switch (state) {
-                    case 1:
-                    if (framesPressed==0) {
-                        System.out.println(action+" Pressed");
-                    } else {
-                        System.out.println(framesPressed);
+                    case 1 -> {
+                        if (framesPressed==0) {
+                            System.out.println(action+" Pressed");
+                        } else {
+                            System.out.println(framesPressed);
+                        }
                     }
-                    break;
-                    case 2:
-                    System.out.println(action+" Released");
-                    break;
+                    case 2 -> System.out.println(action+" Released");
                 }
             }
         }
         keyBinds.updateFrameInformation();
     }
 
+    @Override
     public void paint(Graphics g){
 
     }

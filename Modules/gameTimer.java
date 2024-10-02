@@ -32,9 +32,7 @@ public class gameTimer {
             if (frameDuration < optimalFrameTime) {
                 try {
                     Thread.sleep((optimalFrameTime - frameDuration) / 1_000_000);  // Convert to milliseconds
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
+                } catch (InterruptedException ex) {}
             }
 
             // Set the last frame time to the current one

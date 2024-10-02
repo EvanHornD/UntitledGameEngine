@@ -1,11 +1,11 @@
 package Modules;
 
+import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
-public class KeyBindsManager {
+public final class KeyBindsManager {
     Map<String, String> defaultKeyBindings = new HashMap<>(Map.of(
             "UP", "Up",
             "W", "Up",
@@ -24,8 +24,8 @@ public class KeyBindsManager {
     ));
     Map<String, Integer> keyFrames = new HashMap<>();
 
-    private InputMap inputMap;
-    private ActionMap actionMap;
+    private final InputMap inputMap;
+    private final ActionMap actionMap;
 
     @SuppressWarnings("static-access")
     public KeyBindsManager(JComponent component) {
@@ -84,20 +84,32 @@ public class KeyBindsManager {
         addKeyBinding(newKey, action);
     }
 
-    public void updateFrameInformation(){
+    public Object[][] getActionInformation(){
+        Object[][] ActionSet = new Object[keyActions.size()][];
+        int actionNum = 0;
         for (Map.Entry<String,Integer> action : keyActions.entrySet()) {
             String actionName = action.getKey();
-            Integer actionState = action.getValue();
-            Integer actionFrameState = keyFrames.get(actionName);
+            ActionSet[actionNum] = new Object[]{actionName,action.getValue(),keyFrames.get(actionName)};
+            actionNum++;
+        }
+        return ActionSet;
+    }
+
+    public void updateFrameInformation(){
+        Object[][] Actions = getActionInformation();
+        for (Object[] Action : Actions) {
+            String actionName = (String)Action[0];
+            Integer actionState = (Integer)Action[1];
+            Integer actionFrameState = (Integer)Action[2];
             switch (actionState) {
-                case 1:
-                actionFrameState++;
-                keyFrames.replace(actionName, actionFrameState);
-                break;
-                case 2:
-                keyFrames.replace(actionName,0);
-                keyActions.replace(actionName,0);
-                break;
+                case 1 -> {
+                    actionFrameState++;
+                    keyFrames.replace(actionName, actionFrameState);
+                }
+                case 2 -> {
+                    keyFrames.replace(actionName,0);
+                    keyActions.replace(actionName,0);
+                }
             }
         }
     }
