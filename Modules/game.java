@@ -3,6 +3,9 @@ package Modules;
 import java.awt.*;
 import javax.swing.*;
 
+import Modules.gameGraphics.GraphicsRenderer;
+import Modules.userInput.KeyBindsManager;
+
 public class game extends JPanel {
 
     //#region   Class attributes
