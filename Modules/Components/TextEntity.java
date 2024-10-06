@@ -1,7 +1,10 @@
-package Modules.gameGraphics;
+package Modules.Components;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+
+import Modules.gameGraphics.RenderableEntity;
 
 public class TextEntity extends RenderableEntity {
     private String text;
@@ -45,6 +48,7 @@ public class TextEntity extends RenderableEntity {
     @Override
     public void render(Graphics2D g2d) {
         g2d.setFont(font);
+        g2d.setColor(Color.LIGHT_GRAY);
         g2d.drawString(text, coordinates[0], coordinates[1]);
     }
 }

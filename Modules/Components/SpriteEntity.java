@@ -1,7 +1,9 @@
-package Modules.gameGraphics;
+package Modules.Components;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+
+import Modules.gameGraphics.RenderableEntity;
 
 public class SpriteEntity extends RenderableEntity {
     private Image image;

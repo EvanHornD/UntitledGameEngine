@@ -1,6 +1,8 @@
-package Modules.gameGraphics;
+package Modules.Components;
 import java.awt.Color;
 import java.awt.Graphics2D;
+
+import Modules.gameGraphics.RenderableEntity;
 
 public class ShapeEntity extends RenderableEntity {
     public Color defaultColor = new Color(31,31,31);
