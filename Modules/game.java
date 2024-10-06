@@ -3,7 +3,7 @@ package Modules;
 import java.awt.*;
 import javax.swing.*;
 
-import Modules.Components.LabeledShapeEntity;
+import Modules.Components.*;
 import Modules.gameGraphics.*;
 import Modules.userInput.KeyBindsManager;
 
@@ -25,9 +25,9 @@ public class game extends JPanel {
 
         // Add entities with specific layers and priorities
         renderer.currentScene.addEntityToScene(new SpriteEntity(null, 1));
-        renderer.currentScene.addEntityToScene(new ShapeEntity("Rectangle", new int[]{(int)dimensions.getWidth(), (int)dimensions.getHeight()}, -1));
+        renderer.currentScene.addEntityToScene(new ShapeEntity("Rectangle", new int[]{(int)dimensions.getWidth(), (int)dimensions.getHeight()}, 0));
         renderer.currentScene.addEntityToScene(new TextEntity("Hello World!",new int[]{300,100}, 2));
-        LabeledShapeEntity labeledShape = new LabeledShapeEntity(new ShapeEntity("Rectangle",new int[]{100,100}, new int[]{200, 100}, 1), "Labeled Shape", 1);
+        LabeledShapeEntity labeledShape = new LabeledShapeEntity(new ShapeEntity("Rectangle",new int[]{100,300}, new int[]{200, 100}, 1), "Labeled Shape", 1);
         renderer.currentScene.addEntityToScene(labeledShape);
         renderer.currentScene.updateLayerSorting();
     }
