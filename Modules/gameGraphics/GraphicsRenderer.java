@@ -46,6 +46,7 @@ import javax.swing.*;
 public class GraphicsRenderer {
 
     private JPanel panel;
+    
 
     public GraphicsRenderer(JPanel panel) {
         this.panel = panel;
