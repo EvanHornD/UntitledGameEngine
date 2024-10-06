@@ -1,33 +1,36 @@
 package Modules.gameGraphics;
 
 import java.util.ArrayList;
+import java.awt.Graphics2D;
+import java.util.Comparator;
+import java.util.List;
+import java.util.TreeMap;
 
 public class Scene {
-    private ArrayList<SpriteEntity> Sprites = new ArrayList<SpriteEntity>();
-    private ArrayList<TextEntity> Text = new ArrayList<TextEntity>();
-    private ArrayList<ShapeEntity> Shapes = new ArrayList<ShapeEntity>();
+    private TreeMap<Integer, List<Renderable>> layerMap = new TreeMap<>();
 
-    public void addSpriteToScene(SpriteEntity sprite){
-        Sprites.add(sprite);
+    public void addEntityToScene(Renderable entity) {
+        int layer = entity.getLayer();
+        layerMap.putIfAbsent(layer, new ArrayList<>());
+        layerMap.get(layer).add(entity);
     }
 
-    public void addTextToScene(TextEntity text){
-        Text.add(text);
+    // Sort entities by layer 
+    private void sortEntitiesInLayer(List<Renderable> entities) {
+        entities.sort(Comparator.comparingInt(Renderable::getLayerPriority));
     }
 
-    public void addShapeToScene(ShapeEntity shape){
-        Shapes.add(shape);
+    public void updateLayerSorting(){
+        for (List<Renderable> layerEntities : layerMap.values()) {
+            sortEntitiesInLayer(layerEntities);
+        }
     }
 
-    public ArrayList<ShapeEntity> getShapes(){
-        return Shapes;
-    }
-
-    public ArrayList<SpriteEntity> getSprites(){
-        return Sprites;
-    }
-
-    public ArrayList<TextEntity> getText(){
-        return Text;
+    public void renderScene(Graphics2D g2d) {
+        for (List<Renderable> layerEntities : layerMap.values()) {
+            for (Renderable entity : layerEntities) {
+                entity.render(g2d);
+            }
+        }
     }
 }
