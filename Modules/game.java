@@ -3,7 +3,7 @@ package Modules;
 import java.awt.*;
 import javax.swing.*;
 
-import Modules.gameGraphics.GraphicsRenderer;
+import Modules.gameGraphics.*;
 import Modules.userInput.KeyBindsManager;
 
 public class game extends JPanel {
@@ -21,6 +21,8 @@ public class game extends JPanel {
         keyBinds = new KeyBindsManager(this);
         gameTimer = new gameTimer();
         renderer = new GraphicsRenderer(this);
+        renderer.currentScene.addTextToScene(new TextEntity("Bruh"));
+        renderer.currentScene.addShapeToScene(new ShapeEntity("Rectangle",new int[]{(int)dimensions.getWidth(), (int)dimensions.getHeight()}));
     }
 
     public void startGameTimer() {

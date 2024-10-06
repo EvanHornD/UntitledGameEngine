@@ -2,6 +2,8 @@ package Modules.gameGraphics;
 
 import java.awt.Graphics2D;
 import javax.swing.*;
+import java.util.ArrayList;
+import java.awt.Color;
 
 /* types of rendering opperations
 1. Background Elements
@@ -46,14 +48,48 @@ import javax.swing.*;
 public class GraphicsRenderer {
 
     private JPanel panel;
-    
+    public Scene currentScene;
 
     public GraphicsRenderer(JPanel panel) {
         this.panel = panel;
+        this.currentScene = new Scene();
+    }
+
+    public void changeScene(Scene scene){
+        this.currentScene = scene;
     }
 
     public void draw(Graphics2D g2d) {
+        drawText(currentScene.getText(),g2d);
+        drawShapes(currentScene.getShapes(),g2d);
+    }
 
+    public void drawText(ArrayList<TextEntity> textEntities, Graphics2D g2d){
+        for (TextEntity text : textEntities) {
+            g2d.setFont(text.getFont());
+            int[] coords = text.getCoords();
+            String textString = text.getText();
+            System.out.println(textString);
+            g2d.drawString(textString, coords[0], coords[1]);
+        }
+    }
+
+    public void drawShapes(ArrayList<ShapeEntity> shapeEntities, Graphics2D g2d){
+        for (ShapeEntity shape : shapeEntities) {
+            String shapeType = shape.getShape();
+            Color color = shape.getColor();
+            int[] coords = shape.getCoords();
+            int[] dimensions = shape.getDimensions();
+            g2d.setColor(color);
+            switch (shapeType) {
+                case "Rectangle":
+                g2d.fillRect(coords[0],coords[1],dimensions[0],dimensions[1]);
+                break;
+
+                default:
+                break;
+            }
+        }
     }
 
     public void triggerRepaint() {
