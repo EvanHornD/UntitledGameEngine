@@ -19,12 +19,12 @@ public class ShapeEntity extends RenderableEntity {
         this.color = defaultColor;
     }
 
-    public ShapeEntity(String shape, int[] coordinates, int[] dimensions, int layer) {
+    public ShapeEntity(String shape, int[] coordinates, int[] dimensions, Color color, int layer) {
         super(layer,1);
         this.shape = shape;
         this.coordinates = coordinates;
         this.dimensions = dimensions;
-        this.color = defaultColor;
+        this.color = color;
     }
 
     public ShapeEntity(String shape, int[] coordinates, int[] dimensions) {

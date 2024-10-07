@@ -14,7 +14,7 @@ public class LabeledShapeEntity extends RenderableEntity {
         this.shape = shape;
         int[] coords = shape.getCoords();
         int[] dimensions = shape.getDimensions();
-        this.text = new TextEntity(text,new int[]{coords[0],coords[1]-dimensions[1]});
+        this.text = new TextEntity(text,new int[]{coords[0]+dimensions[0]/2,coords[1]+dimensions[1]/2},"Centered");
     }
 
     @Override

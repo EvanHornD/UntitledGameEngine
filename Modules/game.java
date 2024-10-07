@@ -23,11 +23,10 @@ public class game extends JPanel {
         gameTimer = new gameTimer();
         renderer = new GraphicsRenderer(this);
 
-        // Add entities with specific layers and priorities
         renderer.currentScene.addEntityToScene(new SpriteEntity(null, 1));
         renderer.currentScene.addEntityToScene(new ShapeEntity("Rectangle", new int[]{(int)dimensions.getWidth(), (int)dimensions.getHeight()}, 0));
-        renderer.currentScene.addEntityToScene(new TextEntity("Hello World!",new int[]{300,100}, 2));
-        LabeledShapeEntity labeledShape = new LabeledShapeEntity(new ShapeEntity("Rectangle",new int[]{100,300}, new int[]{200, 100}, 1), "Labeled Shape", 1);
+        renderer.currentScene.addEntityToScene(new TextEntity("Hello World!",new int[]{300,100}, 2,"Left"));
+        LabeledShapeEntity labeledShape = new LabeledShapeEntity(new ShapeEntity("Rectangle",new int[]{100,300}, new int[]{200, 100},Color.GRAY, 1), "Labeled Shape", 1);
         renderer.currentScene.addEntityToScene(labeledShape);
         renderer.currentScene.updateLayerSorting();
     }
