@@ -9,8 +9,7 @@ import java.util.TreeMap;
 
 public class Scene {
     private final TreeMap<Integer, List<Renderable>> layerMap = new TreeMap<>();
-    private final ArrayList<UpdatableEntity> updatables = new ArrayList<>();
-    private int CurrentFrame = 0;
+    private final int CurrentFrame = 0;
 
     public void addEntityToScene(Renderable entity) {
         int layer = entity.getLayer();
@@ -19,11 +18,14 @@ public class Scene {
     }
 
     public void updateEntities(){
-        CurrentFrame++;
-        for (UpdatableEntity updatable : updatables) {
-            updatable.update(CurrentFrame);
+        
+        for (List<Renderable> layerEntities : layerMap.values()) {
+            for (Renderable entity : layerEntities) {
+                if (entity instanceof UpdatableEntity updatableEntity) {
+                    updatableEntity.update(CurrentFrame);
+                }
+            }
         }
-;
     }
 
     // Sort entities by layer 
