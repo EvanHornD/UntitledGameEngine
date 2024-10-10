@@ -29,7 +29,7 @@ public class game extends JPanel {
         LabeledShapeEntity labeledShape = new LabeledShapeEntity(new ShapeEntity("Rectangle",new int[]{100,300}, new int[]{200, 100},Color.GRAY, 1), "Labeled Shape", 1);
         renderer.currentScene.addEntityToScene(labeledShape);
         renderer.currentScene.updateLayerSorting();
-    }
+    } 
 
     public void startGameTimer() {
         gameTimer.start(deltaTime -> {
