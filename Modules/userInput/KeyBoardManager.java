@@ -7,7 +7,7 @@ public class KeyBoardManager {
         
     private final InputMap inputMap;
     private final ActionMap actionMap;
-    private KeyBindsManager keyBinds;
+    private final KeyBindsManager keyBinds;
 
     public KeyBoardManager(JComponent component, KeyBindsManager keyBinds) {
         this.inputMap = component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
