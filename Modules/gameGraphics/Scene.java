@@ -1,15 +1,17 @@
 package Modules.gameGraphics;
 
+import Modules.Components.ControllableEntity;
 import Modules.Components.UpdatableEntity;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.Map;
 
 public class Scene {
     private final TreeMap<Integer, List<Renderable>> layerMap = new TreeMap<>();
-    private final int CurrentFrame = 0;
+    private int currentFrame = 0;
 
     public void addEntityToScene(Renderable entity) {
         int layer = entity.getLayer();
@@ -17,12 +19,15 @@ public class Scene {
         layerMap.get(layer).add(entity);
     }
 
-    public void updateEntities(){
-        
+    public void updateEntities(Map<String, Integer> keyActions, Map<String, Integer> keyFrames) {
+        currentFrame++;
         for (List<Renderable> layerEntities : layerMap.values()) {
             for (Renderable entity : layerEntities) {
                 if (entity instanceof UpdatableEntity updatableEntity) {
-                    updatableEntity.update(CurrentFrame);
+                    updatableEntity.update(currentFrame);
+                    if(entity instanceof ControllableEntity controllableEntity){
+                        controllableEntity.updateWithInput(currentFrame, keyActions, keyFrames);
+                    }
                 }
             }
         }

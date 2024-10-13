@@ -58,7 +58,7 @@ public final class KeyBindsManager {
     }
 
 
-    public Object[][] getActionInformation(){
+    public Object[][] getInformation(){
         Object[][] ActionSet = new Object[keyActions.size()][];
         int actionNum = 0;
         for (Map.Entry<String,Integer> action : keyActions.entrySet()) {
@@ -69,8 +69,16 @@ public final class KeyBindsManager {
         return ActionSet;
     }
 
+    public Map<String, Integer> getKeyActions(){
+        return this.keyActions;
+    }
+
+    public Map<String, Integer> getKeyFrames(){
+        return this.keyFrames;
+    }
+
     public void updateFrameInformation(){
-        Object[][] Actions = getActionInformation();
+        Object[][] Actions = getInformation();
         for (Object[] Action : Actions) {
             String actionName = (String)Action[0];
             Integer actionState = (Integer)Action[1];

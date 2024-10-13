@@ -51,6 +51,10 @@ public class ShapeEntity extends RenderableEntity {
         return color;
     }
 
+    public void setCoords(int[] coordinates){
+        this.coordinates = coordinates;
+    }
+
     @Override
     public void render(Graphics2D g2d) {
         g2d.setColor(color);
