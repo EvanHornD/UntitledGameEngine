@@ -1,8 +1,7 @@
 package Modules.Components;
+import Modules.gameGraphics.RenderableEntity;
 import java.awt.Color;
 import java.awt.Graphics2D;
-
-import Modules.gameGraphics.RenderableEntity;
 
 public class ShapeEntity extends RenderableEntity {
     public Color defaultColor = new Color(31,31,31);
@@ -33,6 +32,14 @@ public class ShapeEntity extends RenderableEntity {
         this.coordinates = coordinates;
         this.dimensions = dimensions;
         this.color = defaultColor;
+    }
+
+    public ShapeEntity(String shape, int[] coordinates, int[] dimensions, Color color) {
+        super(0,0);
+        this.shape = shape;
+        this.coordinates = coordinates;
+        this.dimensions = dimensions;
+        this.color = color;
     }
 
     public String getShape() {

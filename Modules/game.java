@@ -1,11 +1,9 @@
 package Modules;
 
-import java.awt.*;
-import javax.swing.*;
-
-import Modules.Components.*;
 import Modules.gameGraphics.*;
 import Modules.userInput.KeyBindsManager;
+import java.awt.*;
+import javax.swing.*;
 
 public class game extends JPanel {
 
@@ -22,13 +20,15 @@ public class game extends JPanel {
         keyBinds = new KeyBindsManager(this);
         gameTimer = new gameTimer();
         renderer = new GraphicsRenderer(this);
-
+        renderer.currentScene.addEntityToScene(new SnakePlayer(0, 0, new int[]{(int)dimensions.getWidth()/2,(int)dimensions.getHeight()/2}, 25, 30, new int[]{15,17}));
+        /*
         renderer.currentScene.addEntityToScene(new SpriteEntity(null, 1));
         renderer.currentScene.addEntityToScene(new ShapeEntity("Rectangle", new int[]{(int)dimensions.getWidth(), (int)dimensions.getHeight()}, 0));
         renderer.currentScene.addEntityToScene(new TextEntity("Hello World!",new int[]{300,100}, 2,"Left"));
         LabeledShapeEntity labeledShape = new LabeledShapeEntity(new ShapeEntity("Rectangle",new int[]{100,300}, new int[]{200, 100},Color.GRAY, 1), "Labeled Shape", 1);
         renderer.currentScene.addEntityToScene(new Player(3, Color.GREEN, "Rectangle", new int[]{(int)dimensions.getWidth()/2, (int)dimensions.getHeight()/2}, new int[]{100,100}));
         renderer.currentScene.addEntityToScene(labeledShape);
+        */
         renderer.currentScene.updateLayerSorting();
     } 
 
