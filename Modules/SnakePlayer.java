@@ -26,11 +26,11 @@ public class SnakePlayer extends ControllableEntity{
 
     public SnakePlayer(int layer, int layerPriority,int[] centerOfBoard, int tileSize, int framesPerMove, int[] boardDimensions) {
         super(layer, layerPriority);
-        this.centerOfBoard = centerOfBoard;
-        this.tileSize = tileSize;
-        this.framesPerMove = framesPerMove;
-        this.boardDimensions = boardDimensions;
-        this.centerOfGrid = new int[]{boardDimensions[0]/2,boardDimensions[1]/2};
+        SnakePlayer.centerOfBoard = centerOfBoard;
+        SnakePlayer.tileSize = tileSize;
+        SnakePlayer.framesPerMove = framesPerMove;
+        SnakePlayer.boardDimensions = boardDimensions;
+        SnakePlayer.centerOfGrid = new int[]{boardDimensions[0]/2,boardDimensions[1]/2};
         snake.add(createShape(centerOfGrid, Color.GREEN));
         snakeGridCoordinates.add(centerOfGrid);
         headGridCoords = centerOfGrid;
@@ -38,20 +38,26 @@ public class SnakePlayer extends ControllableEntity{
     }
 
     private static void moveSnake(int[] coords){
-        if (snakeGridCoordinates.contains(coords)||checkOutOfBounds(coords)) {
-            gameState = "Lose";
-        }else if(coords.equals(appleCoordinates)){
+        if(appleCoordinates[0]==coords[0]&&appleCoordinates[1]==coords[1]){
             snake.addLast(createShape(coords, Color.GREEN));
             snakeGridCoordinates.addLast(coords);
             headGridCoords = coords;
             createApple();
-        }else{
-            snake.addLast(createShape(coords, Color.GREEN));
-            snakeGridCoordinates.addLast(coords);
-            headGridCoords = coords;
-            snake.removeFirst();
-            snakeGridCoordinates.removeFirst();
+        } else {
+            if(gameState!="Start"){
+                snake.removeFirst();
+                snakeGridCoordinates.removeFirst();
+            }
+            if (snakeCoordsContains(coords)||checkOutOfBounds(coords)) {
+                gameState = "Lose";
+                
+            }else{
+                snake.addLast(createShape(coords, Color.GREEN));
+                headGridCoords = coords;
+                snakeGridCoordinates.addLast(coords);
+            }
         }
+
     }
 
     private static boolean checkOutOfBounds(int[] coords){
@@ -67,13 +73,25 @@ public class SnakePlayer extends ControllableEntity{
             gameState = "Win";
         } else {
             Random appleGenerator = new Random();
-            int[] newCoords = new int[]{appleGenerator.nextInt(boardDimensions[0]),appleGenerator.nextInt(boardDimensions[0])};
-            while(snakeGridCoordinates.contains(newCoords)){
-                newCoords = new int[]{appleGenerator.nextInt(boardDimensions[0]),appleGenerator.nextInt(boardDimensions[0])};
+            int[] newCoords = new int[]{appleGenerator.nextInt(boardDimensions[0]),appleGenerator.nextInt(boardDimensions[1])};
+            while(snakeCoordsContains(newCoords)){
+
+                newCoords = new int[]{appleGenerator.nextInt(boardDimensions[0]),appleGenerator.nextInt(boardDimensions[1])};
             }
             apple = createShape(newCoords, Color.RED);
             appleCoordinates = newCoords;
         }
+    }
+
+    private static boolean snakeCoordsContains(int[] coords){
+        for (int[] segment : snakeGridCoordinates) {
+            int X = segment[0];
+            int Y = segment[1];
+            if(X==coords[0]&&Y==coords[1]){
+                return true;
+            }
+        }
+        return false;
     }
 
     private static ShapeEntity createShape(int[] gridCoords, Color color){
@@ -95,7 +113,6 @@ public class SnakePlayer extends ControllableEntity{
             case "Left": x--;break;
             case "Right": x++;break;
         }
-        System.out.println(x+ " " +y);
         movementDirection = dir;
         moveSnake(new int[]{x,y});
         if(gameState.equals("Start")){
@@ -111,12 +128,6 @@ public class SnakePlayer extends ControllableEntity{
             if(currentFrame == framesPerMove){
                 moveDirection(movementDirection);
                 currentFrame = 0;
-                /*
-                for (ShapeEntity segmentShape : snake) {
-                    int[] segment = segmentShape.getCoords()
-                    System.out.println(segment[0]+" "+segment[1]);
-                }
-                */
             } else {
                 currentFrame++;
             }
@@ -130,40 +141,24 @@ public class SnakePlayer extends ControllableEntity{
                 gameState = "reset";
             }
         }else{
-            if (!gameState.equals("Lose")||!gameState.equals("Win")) {
+            if (!gameState.equals("Lose")&&!gameState.equals("Win")) {
                 if (keyActions.get("Up") == 2) {
-                    if(gameState.equals("Start")){
-                        System.out.println("test");
-                        moveDirection("Up");
-                    }
-                    if(movementDirection.equals("Left")||movementDirection.equals("Right")){
+                    if(gameState.equals("Start")||movementDirection.equals("Left")||movementDirection.equals("Right")){
                         moveDirection("Up");
                     }
                 }
                 if (keyActions.get("Down") == 2) {
-                    if(gameState.equals("Start")){
-                        System.out.println("test");
-                        moveDirection("Down");
-                    }
-                    if(movementDirection.equals("Left")||movementDirection.equals("Right")){
+                    if(gameState.equals("Start")||movementDirection.equals("Left")||movementDirection.equals("Right")){
                         moveDirection("Down");
                     }
                 }
                 if (keyActions.get("Left") == 2) {
-                    if(gameState.equals("Start")){
-                        System.out.println("test");
-                        moveDirection("Left");
-                    }
-                    if(movementDirection.equals("Up")||movementDirection.equals("Down")){
+                    if(gameState.equals("Start")||movementDirection.equals("Up")||movementDirection.equals("Down")){
                         moveDirection("Left");
                     }
                 }
                 if (keyActions.get("Right") == 2) {
-                    if(gameState.equals("Start")){
-                        System.out.println("test");
-                        moveDirection("Right");
-                    }
-                    if(movementDirection.equals("Up")||movementDirection.equals("Down")){
+                    if(gameState.equals("Start")||movementDirection.equals("Up")||movementDirection.equals("Down")){
                         moveDirection("Right");
                     }
                 }

@@ -21,17 +21,44 @@ public class game extends JPanel {
         keyBinds = new KeyBindsManager(this);
         gameTimer = new gameTimer();
         renderer = new GraphicsRenderer(this);
-        renderer.currentScene.addEntityToScene(new SnakePlayer(4, 0, new int[]{(int)dimensions.getWidth()/2,(int)dimensions.getHeight()/2}, 25, 30, new int[]{15,17}));
+
+        int width = (int)dimensions.getWidth();
+        int height = (int)dimensions.getHeight();
+        int tileSize = 40;
+        int[] centerOffSet = new int[]{width/2-tileSize/2,height/2-tileSize/2};
+        int[] tileDimensions = new int[]{tileSize,tileSize};
+        int[] gridDimensions =  new int[]{17,15};
+        int[] gridCenter = new int[]{gridDimensions[0]/2,gridDimensions[1]/2};
+
+        //create snake player 
+        renderer.currentScene.addEntityToScene(new SnakePlayer(4, 0, centerOffSet, tileSize, 20,gridDimensions));
+
+        //create grid
+        for(int i=0;i<gridDimensions[0];i++){
+            for (int j=0;j<gridDimensions[1];j++) {
+                if((i*gridDimensions[0]+j)%2==1){
+                    renderer.currentScene.addEntityToScene(new ShapeEntity("Rectangle", getCoordinates(new int[]{i,j}, centerOffSet, gridCenter, tileSize), tileDimensions, new Color(45,60,45), -1));
+                }else{
+                    renderer.currentScene.addEntityToScene(new ShapeEntity("Rectangle", getCoordinates(new int[]{i,j}, centerOffSet, gridCenter, tileSize), tileDimensions, new Color(60,75,60), -1));
+                }
+            }
+        }
         
-        renderer.currentScene.addEntityToScene(new SpriteEntity(null, 1));
-        renderer.currentScene.addEntityToScene(new ShapeEntity("Rectangle", new int[]{(int)dimensions.getWidth(), (int)dimensions.getHeight()}, 0));
-        renderer.currentScene.addEntityToScene(new TextEntity("Hello World!",new int[]{300,100}, 2,"Left"));
-        LabeledShapeEntity labeledShape = new LabeledShapeEntity(new ShapeEntity("Rectangle",new int[]{100,300}, new int[]{200, 100},Color.GRAY, 1), "SNAKE", 1);
-        //renderer.currentScene.addEntityToScene(new Player(3, Color.GREEN, "Rectangle", new int[]{(int)dimensions.getWidth()/2, (int)dimensions.getHeight()/2}, new int[]{100,100}));
+        //create gray background
+        renderer.currentScene.addEntityToScene(new ShapeEntity("Rectangle", new int[]{width, height}, -2));
+
+        //Draw SNAKE at top
+        LabeledShapeEntity labeledShape = new LabeledShapeEntity(new ShapeEntity("Rectangle",new int[]{width/6,height/32}, new int[]{2*width/3, height/8},Color.BLACK, 1), "SNAKE", 80, 1);
         renderer.currentScene.addEntityToScene(labeledShape);
         
         renderer.currentScene.updateLayerSorting();
-    } 
+    }
+
+    public  static int[] getCoordinates(int[] gridCoords, int[] centerOfBoard, int[] centerOfGrid, int tileSize){
+        int absoluteX = centerOfBoard[0]-(centerOfGrid[0]*tileSize)+(tileSize*gridCoords[0]);
+        int absoluteY = centerOfBoard[1]-(centerOfGrid[1]*tileSize)+(tileSize*gridCoords[1]);
+        return new int[]{absoluteX,absoluteY};
+    }
 
     public void startGameTimer() {
         gameTimer.start(deltaTime -> {

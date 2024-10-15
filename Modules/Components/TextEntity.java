@@ -29,6 +29,14 @@ public class TextEntity extends RenderableEntity {
         this.alignment = alignment;
     }
 
+    public TextEntity(String text,int textSize,int[] coordinates, String alignment) {
+        super(0,0);
+        this.text = text;
+        this.font = new Font("Arial", 0, textSize);
+        this.coordinates = coordinates;
+        this.alignment = alignment;
+    }
+
     public TextEntity(String text,int[] coordinates, String alignment) {
         super(0,0);
         this.text = text;

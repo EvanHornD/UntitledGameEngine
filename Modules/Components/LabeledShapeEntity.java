@@ -9,12 +9,12 @@ public class LabeledShapeEntity extends RenderableEntity {
     private ShapeEntity shape;
     private TextEntity text;
 
-    public LabeledShapeEntity(ShapeEntity shape, String text, int layer){
+    public LabeledShapeEntity(ShapeEntity shape, String text,int textSize, int layer){
         super(layer,4);
         this.shape = shape;
         int[] coords = shape.getCoords();
         int[] dimensions = shape.getDimensions();
-        this.text = new TextEntity(text,new int[]{coords[0]+dimensions[0]/2,coords[1]+dimensions[1]/2},"Centered");
+        this.text = new TextEntity(text,textSize,new int[]{coords[0]+dimensions[0]/2,coords[1]+dimensions[1]/2},"Centered");
     }
 
     @Override
