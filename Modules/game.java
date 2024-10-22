@@ -24,14 +24,14 @@ public class game extends JPanel {
 
         int width = (int)dimensions.getWidth();
         int height = (int)dimensions.getHeight();
-        int tileSize = 40;
+        int tileSize = 30;
         int[] centerOffSet = new int[]{width/2-tileSize/2,height/2-tileSize/2};
         int[] tileDimensions = new int[]{tileSize,tileSize};
         int[] gridDimensions =  new int[]{17,15};
         int[] gridCenter = new int[]{gridDimensions[0]/2,gridDimensions[1]/2};
 
         //create snake player 
-        renderer.currentScene.addEntityToScene(new SnakePlayer(4, 0, centerOffSet, tileSize, 20,gridDimensions));
+        renderer.currentScene.addEntityToScene(new SnakePlayer(4, 0, centerOffSet, tileSize, 12,gridDimensions));
 
         //create grid
         for(int i=0;i<gridDimensions[0];i++){
